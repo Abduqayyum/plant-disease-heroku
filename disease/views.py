@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 import tensorflow as tf
 import matplotlib.pylab as plt
 from tensorflow import keras
-from keras.models import load_model
+from tensorflow.keras.models import load_model
 from django.http import JsonResponse
 from .models import Image
 from .serializers import ImageSerializer
@@ -97,8 +97,8 @@ class ImageModelVS(ModelViewSet):
 
 class PredictionView(APIView):
     def post(self, request, pk):
-        with keras_utils.custom_object_scope({'KerasLayer': hub.KerasLayer}):
-              model = keras.models.load_model("efficiennet_model_aug.h5")
+        # with keras_utils.custom_object_scope({'KerasLayer': hub.KerasLayer}):
+        model = tf.keras.models.load_model('efficiennet_model_aug.h5', custom_objects={'KerasLayer': hub.KerasLayer})
         image = Image.objects.get(id=pk)
         uploaded_img = image.image 
         pred = predict_image(uploaded_img, model, class_names=class_names)
