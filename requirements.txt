@@ -7,4 +7,3 @@ Pillow==9.5.0
 tensorflow-hub
 whitenoise
 matplotlib
-tensorrt
